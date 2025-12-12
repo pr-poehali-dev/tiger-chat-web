@@ -100,10 +100,7 @@ const Index = () => {
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
               КТО МЫ ТАКИЕ
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Тигриный чат — это профессиональный беговой клуб, объединяющий спортсменов 
-              всех уровней. Мы верим в силу команды, дисциплину и постоянное развитие.
-            </p>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">Сообщество бегунов любителей. Тренируйся с тиграми, достигай невозможного.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
