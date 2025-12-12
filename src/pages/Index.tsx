@@ -67,12 +67,9 @@ const Index = () => {
         </div>
         
         <div className="relative z-10 text-center text-white px-4 max-w-5xl animate-fade-in">
-          <Badge className="mb-6 text-lg px-6 py-2 bg-primary hover:bg-primary/90">
-            Беговой клуб №1
-          </Badge>
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight">
-            ТИГРИНЫЙ ЧАТ
-          </h1>
+          <Badge className="mb-6 text-lg px-6 py-2 bg-primary hover:bg-primary/90">#декабрьская_беготня</Badge>
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight">Вечно голодная 
+тигриная стая</h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl mx-auto">
             Профессиональное сообщество бегунов. Тренируйся с лучшими, достигай невозможного.
           </p>
