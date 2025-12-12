@@ -9,7 +9,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('training');
 
   const achievements = [
-    { number: '150+', label: 'Участников' },
+    { number: '19', label: 'Участников' },
     { number: '50+', label: 'Марафонов' },
     { number: '200+', label: 'Медалей' },
     { number: '5', label: 'Лет опыта' }
