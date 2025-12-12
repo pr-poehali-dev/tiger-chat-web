@@ -107,7 +107,8 @@ const Index = () => {
     {
       name: 'Ксения Петербургская',
       role: 'Ксения',
-      achievement: 'СПБ'
+      achievement: 'СПБ',
+      image: 'https://cdn.poehali.dev/files/ksu.png'
     },
     {
       name: 'Владимир Коротин',
