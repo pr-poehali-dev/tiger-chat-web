@@ -274,7 +274,7 @@ const Index = () => {
                       <img 
                         src={member.image} 
                         alt={member.name}
-                        className="w-16 h-16 rounded-full object-cover"
+                        className="w-16 h-16 rounded-full object-cover object-top"
                       />
                     ) : (
                       <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold">
