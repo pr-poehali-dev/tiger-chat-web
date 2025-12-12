@@ -85,7 +85,7 @@ const teamMembers = [
     achievement: 'Челябинск'
   },
   {
-    name: 'Алёна',
+    name: 'Алёна Луговая',
     role: 'Алёна',
     achievement: 'Новосибирск'
   },
