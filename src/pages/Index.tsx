@@ -442,9 +442,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <h3 className="text-2xl font-bold mb-4">ТИГРИНЫЙ ЧАТ</h3>
-              <p className="text-background/70">
-                Профессиональный беговой клуб для тех, кто стремится к победам
-              </p>
+              <p className="text-background/70">Любительский беговой клуб для тех, кто стремится к победам</p>
             </div>
             <div>
               <h4 className="text-xl font-semibold mb-4">Контакты</h4>
