@@ -7,6 +7,7 @@ import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('training');
+  const [mediaTab, setMediaTab] = useState('photos');
 
   const achievements = [
     { number: '19', label: 'Участников' },
@@ -302,7 +303,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <Badge variant="outline" className="mb-4 text-base px-4 py-1">
-              Галерея
+              Медиа
             </Badge>
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
               МОМЕНТЫ ПОБЕД
@@ -312,22 +313,44 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {gallery.map((item, index) => (
-              <div key={index} className="relative h-80 rounded-xl overflow-hidden group animate-scale-in shadow-xl" style={{ animationDelay: `${index * 0.1}s` }}>
-                <img 
-                  src={item.url} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-white text-xl font-semibold">{item.title}</h3>
+          <Tabs value={mediaTab} onValueChange={setMediaTab} className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12">
+              <TabsTrigger value="photos" className="text-lg py-3">
+                <Icon name="Image" className="mr-2" size={20} />
+                Фото
+              </TabsTrigger>
+              <TabsTrigger value="audio" className="text-lg py-3">
+                <Icon name="Music" className="mr-2" size={20} />
+                Аудио
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="photos" className="mt-0">
+              <div className="grid md:grid-cols-3 gap-6">
+                {gallery.map((item, index) => (
+                  <div key={index} className="relative h-80 rounded-xl overflow-hidden group animate-scale-in shadow-xl" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <img 
+                      src={item.url} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 className="text-white text-xl font-semibold">{item.title}</h3>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </TabsContent>
+
+            <TabsContent value="audio" className="mt-0">
+              <div className="text-center py-12">
+                <Icon name="Music" size={64} className="mx-auto mb-4 text-muted-foreground" />
+                <p className="text-xl text-muted-foreground">Аудиозаписи скоро появятся</p>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
