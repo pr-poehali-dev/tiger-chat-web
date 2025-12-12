@@ -24,7 +24,8 @@ const Index = () => {
     {
       name: 'Наталья Куйдина',
       role: 'Тигрица из Тюмени',
-      achievement: 'Педагог от Бога. Обворожительная блондинка'
+      achievement: 'Педагог от Бога. Обворожительная блондинка',
+      image: 'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/db2a19db-1953-4190-b5a4-f8646f0734e1.jpg'
     },
     {
       name: 'Елена Шовковая',
