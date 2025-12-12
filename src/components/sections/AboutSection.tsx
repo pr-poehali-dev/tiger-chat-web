@@ -215,10 +215,10 @@ const AboutSection = () => {
                       <img 
                         src={member.image} 
                         alt={member.name}
-                        className="w-16 h-16 rounded-full object-cover object-top"
+                        className="w-16 h-16 rounded-full object-cover object-top transition-transform duration-300 hover:scale-125"
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center transition-transform duration-300 hover:scale-125">
                         <Icon name="User" size={28} className="text-primary" />
                       </div>
                     )}
