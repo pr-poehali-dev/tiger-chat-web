@@ -31,7 +31,7 @@ const Index = () => {
       name: 'Елена Шовковая',
       role: 'Леди Байкал',
       achievement: 'Спортивный концентрат. Бег, лыжи, горы - кайф',
-      image: 'https://cdn.poehali.dev/files/shov.png'
+      image: 'https://cdn.poehali.dev/files/shovk.png'
     },
     {
       name: 'Марина Любимова',
