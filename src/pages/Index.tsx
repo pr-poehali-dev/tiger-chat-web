@@ -85,6 +85,11 @@ const Index = () => {
       name: 'Михаил Марков',
       role: 'МыслейНет',
       achievement: 'Челябинск'
+    },
+    {
+      name: 'Алёна',
+      role: 'Алёна',
+      achievement: 'Новосибирск'
     }
   ];
 
