@@ -40,7 +40,7 @@ const Index = () => {
       name: 'Маргарита Самойлова',
       role: 'Риточка',
       achievement: 'Бегу, дышу',
-      image: 'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/ece98e39-4d90-4375-8d8e-4a11021d4079.jpg'
+      image: 'https://cdn.poehali.dev/files/Ri.png'
     },
     {
       name: 'Раушан Рафикова',
