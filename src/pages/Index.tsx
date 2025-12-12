@@ -269,9 +269,17 @@ const Index = () => {
               <Card key={index} className="bg-background/10 border-background/20 backdrop-blur animate-fade-in hover-scale" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold">
-                      {member.name.charAt(0)}
-                    </div>
+                    {member.image ? (
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="w-16 h-16 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold">
+                        {member.name.charAt(0)}
+                      </div>
+                    )}
                     <div>
                       <h3 className="text-xl font-semibold text-background">{member.name}</h3>
                       <p className="text-background/70">{member.role}</p>
