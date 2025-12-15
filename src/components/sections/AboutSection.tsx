@@ -130,9 +130,10 @@ const teamMembers = [
     achievements: ['Сибирский марафон', '9 марафонов', 'Топ-3 региона']
   },
   {
-    name: 'Марина',
+    name: 'Марина Булгакова',
     role: 'Марина',
     achievement: 'Кемерово',
+    image: 'https://cdn.poehali.dev/files/Bul.png',
     description: 'Кемеровская бегунья с большими амбициями.',
     achievements: ['5 марафонов', 'Рекорд города', 'Командный игрок']
   },
