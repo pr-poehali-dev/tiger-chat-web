@@ -52,7 +52,8 @@ const teamMembers = [
   {
     name: 'Оксана Алексеева',
     role: 'Оксана',
-    achievement: 'Бегу за Ярославль'
+    achievement: 'Бегу за Ярославль',
+    image: 'https://cdn.poehali.dev/files/oks.png'
   },
   {
     name: 'Динара',
