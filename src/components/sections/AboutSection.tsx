@@ -31,7 +31,8 @@ const teamMembers = [
   {
     name: 'Марина Любимова',
     role: 'Августовская Тигрица',
-    achievement: 'Ни дня без бега'
+    achievement: 'Ни дня без бега',
+    image: 'https://cdn.poehali.dev/files/Lub.png'
   },
   {
     name: 'Маргарита Самойлова',
