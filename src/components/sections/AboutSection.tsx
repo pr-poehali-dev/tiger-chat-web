@@ -209,26 +209,28 @@ const AboutSection = () => {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {teamMembers.map((member, index) => (
               <Card key={index} className="bg-background/10 border-background/20 backdrop-blur animate-fade-in hover-scale" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-6">
-                  <div className="flex flex-col items-center text-center mb-4">
+                  <div className="flex items-center gap-4 mb-4">
                     {member.image ? (
                       <img 
                         src={member.image} 
                         alt={member.name}
-                        className="w-24 h-24 rounded-full object-cover object-top transition-transform duration-300 hover:scale-110 mb-4 border-4 border-primary/30"
+                        className="w-16 h-16 rounded-full object-cover object-top transition-transform duration-300 hover:scale-125"
                       />
                     ) : (
-                      <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center transition-transform duration-300 hover:scale-110 mb-4 border-4 border-primary/30">
-                        <Icon name="User" size={36} className="text-primary" />
+                      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center transition-transform duration-300 hover:scale-125">
+                        <Icon name="User" size={28} className="text-primary" />
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold text-background mb-1">{member.name}</h3>
-                    <p className="text-sm text-primary font-semibold mb-3">{member.role}</p>
+                    <div>
+                      <h3 className="text-xl font-bold text-background">{member.name}</h3>
+                      <p className="text-sm text-background/60">{member.role}</p>
+                    </div>
                   </div>
-                  <p className="text-background/80 text-center leading-relaxed">{member.achievement}</p>
+                  <p className="text-background/80">{member.achievement}</p>
                 </CardContent>
               </Card>
             ))}
