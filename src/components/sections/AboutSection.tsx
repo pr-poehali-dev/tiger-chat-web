@@ -77,7 +77,8 @@ const teamMembers = [
   {
     name: 'Юлия Аридова',
     role: 'Юлия',
-    achievement: 'Карельский бег'
+    achievement: 'Карельский бег',
+    image: 'https://cdn.poehali.dev/files/ari.png'
   },
   {
     name: 'Михаил Марков',
