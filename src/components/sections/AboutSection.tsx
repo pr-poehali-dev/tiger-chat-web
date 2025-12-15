@@ -1,6 +1,13 @@
+import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 const achievements = [
   { number: '19', label: 'Участников' },
@@ -14,108 +21,148 @@ const teamMembers = [
     name: 'Юрий Большаков',
     role: 'Владелец клуба',
     achievement: 'Бежит всегда, бежит везде. Примерный семьянин, многодетный отец',
-    image: 'https://cdn.poehali.dev/files/ura.png'
+    image: 'https://cdn.poehali.dev/files/ura.png',
+    description: 'Основатель клуба и вдохновитель команды. Многолетний опыт в беге и организации спортивных мероприятий.',
+    achievements: ['10+ марафонов', 'Организатор беговых клубов', 'Наставник начинающих бегунов']
   },
   {
     name: 'Наталья Куйдина',
     role: 'Тигрица из Тюмени',
     achievement: 'Педагог от Бога. Обворожительная блондинка',
-    image: 'https://cdn.poehali.dev/files/kdn.png'
+    image: 'https://cdn.poehali.dev/files/kdn.png',
+    description: 'Профессиональный педагог и страстный бегун. Вдохновляет своим примером учеников и коллег.',
+    achievements: ['15+ марафонов', 'Призёр региональных соревнований', 'Лучший темп в команде']
   },
   {
     name: 'Елена Шовковая',
     role: 'Леди Байкал',
     achievement: 'Спортивный концентрат. Бег, лыжи, горы - кайф',
-    image: 'https://cdn.poehali.dev/files/shovk.png'
+    image: 'https://cdn.poehali.dev/files/shovk.png',
+    description: 'Универсальная спортсменка с опытом в беге, лыжах и горном туризме. Покоряет вершины и дистанции.',
+    achievements: ['Участница Байкальского марафона', 'Мастер горного бега', '20+ медалей']
   },
   {
     name: 'Марина Любимова',
     role: 'Августовская Тигрица',
     achievement: 'Ни дня без бега',
-    image: 'https://cdn.poehali.dev/files/Lub.png'
+    image: 'https://cdn.poehali.dev/files/Lub.png',
+    description: 'Настоящий пример постоянства и дисциплины. Ежедневные тренировки - её образ жизни.',
+    achievements: ['365 дней бега подряд', '12 марафонов за год', 'Рекорд клуба по регулярности']
   },
   {
     name: 'Маргарита Самойлова',
     role: 'Риточка',
     achievement: 'Бегу, дышу',
-    image: 'https://cdn.poehali.dev/files/Ri.png'
+    image: 'https://cdn.poehali.dev/files/Ri.png',
+    description: 'Бег - это её медитация и способ находить гармонию с собой.',
+    achievements: ['8 марафонов', 'Полумарафон до 1:45', 'Вдохновляет новичков']
   },
   {
     name: 'Раушан Рафикова',
     role: 'Раушан',
-    achievement: 'Бегу и сочиняю стихи на ходу'
+    achievement: 'Бегу и сочиняю стихи на ходу',
+    description: 'Творческая натура, которая находит вдохновение в каждой пробежке.',
+    achievements: ['Автор беговых стихов', '6 марафонов', 'Душа команды']
   },
   {
     name: 'Александр Редькин',
     role: 'Саша',
-    achievement: 'Бег и хобби'
+    achievement: 'Бег и хобби',
+    description: 'Бег - это не просто спорт, а любимое хобби и способ самовыражения.',
+    achievements: ['5 марафонов', 'Участник трейлов', 'Фотограф команды']
   },
   {
     name: 'Оксана Алексеева',
     role: 'Оксана',
     achievement: 'Бегу за Ярославль',
-    image: 'https://cdn.poehali.dev/files/oks.png'
+    image: 'https://cdn.poehali.dev/files/oks.png',
+    description: 'Представляет Ярославль на всероссийских соревнованиях с гордостью.',
+    achievements: ['Чемпионка области', '7 марафонов', 'Амбассадор Ярославля']
   },
   {
     name: 'Динара',
     role: 'Динара',
-    achievement: 'Бег в суровом Челябе'
+    achievement: 'Бег в суровом Челябе',
+    description: 'Челябинская закалка помогает преодолевать любые дистанции.',
+    achievements: ['Бег при -30°C', '4 марафона', 'Железная воля']
   },
   {
     name: 'Валентина',
     role: 'Валентина',
-    achievement: 'Бегу в СПБ'
+    achievement: 'Бегу в СПБ',
+    description: 'Покоряет улицы и набережные Санкт-Петербурга.',
+    achievements: ['Марафон Белые ночи', '10 полумарафонов', 'Городской рекорд']
   },
   {
     name: 'Светлана',
     role: 'Светлана',
-    achievement: 'Улан удэ тудэ сюдэ'
+    achievement: 'Улан удэ тудэ сюдэ',
+    description: 'Бегает по всему Улан-Удэ, изучая родной город.',
+    achievements: ['Локальный эксперт', '5 марафонов', 'Организатор пробежек']
   },
   {
     name: 'Николай',
     role: 'Скиф',
-    achievement: 'ZA Челябинск'
+    achievement: 'ZA Челябинск',
+    description: 'Стойкий и выносливый, как древний воин-скиф.',
+    achievements: ['Ультрамарафон 50км', '8 марафонов', 'Несгибаемый дух']
   },
   {
     name: 'Юлия Аридова',
     role: 'Юлия',
     achievement: 'Карельский бег',
-    image: 'https://cdn.poehali.dev/files/ari.png'
+    image: 'https://cdn.poehali.dev/files/ari.png',
+    description: 'Бегает по карельским лесам и тропам, находя силы в природе.',
+    achievements: ['Трейлраннер', '6 марафонов', 'Покорительница Карелии']
   },
   {
     name: 'Михаил Марков',
     role: 'МыслейНет',
-    achievement: 'Челябинск'
+    achievement: 'Челябинск',
+    description: 'Во время бега отключает мысли и наслаждается процессом.',
+    achievements: ['Медитативный бег', '7 марафонов', 'Дзен-мастер']
   },
   {
     name: 'Алёна Луговая',
     role: 'Алёна',
-    achievement: 'Новосибирск'
+    achievement: 'Новосибирск',
+    description: 'Представляет Новосибирск на спортивной карте России.',
+    achievements: ['Сибирский марафон', '9 марафонов', 'Топ-3 региона']
   },
   {
     name: 'Марина',
     role: 'Марина',
-    achievement: 'Кемерово'
+    achievement: 'Кемерово',
+    description: 'Кемеровская бегунья с большими амбициями.',
+    achievements: ['5 марафонов', 'Рекорд города', 'Командный игрок']
   },
   {
     name: 'Константин',
     role: 'Константин',
-    achievement: 'Иркутск'
+    achievement: 'Иркутск',
+    description: 'Иркутский бегун с настоящим сибирским характером.',
+    achievements: ['Байкальский лёд', '6 марафонов', 'Зимний воин']
   },
   {
     name: 'Ксения Петербургская',
     role: 'Ксения',
     achievement: 'СПБ',
-    image: 'https://cdn.poehali.dev/files/ksu.png'
+    image: 'https://cdn.poehali.dev/files/ksu.png',
+    description: 'Петербургская элегантность сочетается с железной волей.',
+    achievements: ['15 марафонов', 'Белые ночи чемпион', 'Лидер команды СПБ']
   },
   {
     name: 'Владимир Коротин',
     role: 'VK',
-    achievement: 'Вологда'
+    achievement: 'Вологда',
+    description: 'Вологодский бегун с современным подходом к тренировкам.',
+    achievements: ['IT и спорт', '8 марафонов', 'Гаджет-фанат']
   }
 ];
 
 const AboutSection = () => {
+  const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
+
   return (
     <>
       <section className="py-20 px-4 bg-muted/30">
@@ -211,7 +258,12 @@ const AboutSection = () => {
 
           <div className="grid md:grid-cols-3 gap-6">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="bg-background/10 border-background/20 backdrop-blur animate-fade-in hover-scale" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Card 
+                key={index} 
+                className="bg-background/10 border-background/20 backdrop-blur animate-fade-in hover-scale cursor-pointer" 
+                style={{ animationDelay: `${index * 0.1}s` }}
+                onClick={() => setSelectedMember(member)}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-4">
                     {member.image ? (
@@ -237,6 +289,65 @@ const AboutSection = () => {
           </div>
         </div>
       </section>
+
+      <Dialog open={!!selectedMember} onOpenChange={() => setSelectedMember(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <div className="flex items-center gap-4 mb-4">
+              {selectedMember?.image ? (
+                <img 
+                  src={selectedMember.image} 
+                  alt={selectedMember.name}
+                  className="w-20 h-20 rounded-full object-cover object-top"
+                />
+              ) : (
+                <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Icon name="User" size={32} className="text-primary" />
+                </div>
+              )}
+              <div>
+                <DialogTitle className="text-2xl">{selectedMember?.name}</DialogTitle>
+                <p className="text-primary font-semibold">{selectedMember?.role}</p>
+              </div>
+            </div>
+          </DialogHeader>
+          
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                <Icon name="User" size={20} />
+                О спортсмене
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {selectedMember?.description || selectedMember?.achievement}
+              </p>
+            </div>
+
+            {selectedMember?.achievements && selectedMember.achievements.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                  <Icon name="Trophy" size={20} />
+                  Достижения
+                </h3>
+                <ul className="space-y-2">
+                  {selectedMember.achievements.map((achievement, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <Icon name="CheckCircle2" size={18} className="text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="pt-4 border-t">
+              <p className="text-sm text-muted-foreground italic">
+                {selectedMember?.achievement}
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
