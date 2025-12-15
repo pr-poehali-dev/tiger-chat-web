@@ -12,6 +12,12 @@ const gallery = [
 
 const audioTracks = [
   {
+    title: 'Декабрьская беготня',
+    description: 'Зимние пробежки и подготовка к новому сезону',
+    duration: '20:00',
+    url: ''
+  },
+  {
     title: 'Подкаст о беге #1',
     description: 'Обсуждаем подготовку к марафону',
     duration: '15:30',
