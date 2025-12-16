@@ -190,6 +190,8 @@ const teamMembers = [
 const AboutSection = () => {
   const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const handleNextImage = () => {
     if (selectedMember?.gallery) {
@@ -206,6 +208,23 @@ const AboutSection = () => {
   const handleMemberSelect = (member: typeof teamMembers[0]) => {
     setSelectedMember(member);
     setCurrentImageIndex(0);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      handleNextImage();
+    }
+    if (touchStart - touchEnd < -75) {
+      handlePrevImage();
+    }
   };
 
   return (
@@ -397,17 +416,22 @@ const AboutSection = () => {
                   <Icon name="Image" size={20} />
                   Галерея ({currentImageIndex + 1} / {selectedMember.gallery.length})
                 </h3>
-                <div className="relative">
+                <div 
+                  className="relative touch-pan-y"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
                   {selectedMember.gallery[currentImageIndex].includes('drive.google.com') ? (
                     <iframe
                       src={`https://drive.google.com/file/d/${selectedMember.gallery[currentImageIndex].match(/\/d\/([^/]+)/)?.[1]}/preview`}
-                      className="w-full h-[400px] rounded-lg"
+                      className="w-full h-[300px] md:h-[400px] rounded-lg"
                       allow="autoplay"
                     />
                   ) : selectedMember.gallery[currentImageIndex].endsWith('.mp4') ? (
                     <video
                       src={selectedMember.gallery[currentImageIndex]}
-                      className="w-full h-[400px] object-contain rounded-lg bg-muted"
+                      className="w-full h-[300px] md:h-[400px] object-contain rounded-lg bg-muted"
                       controls
                       playsInline
                     />
@@ -415,7 +439,7 @@ const AboutSection = () => {
                     <img
                       src={selectedMember.gallery[currentImageIndex]}
                       alt={`${selectedMember.name} - фото ${currentImageIndex + 1}`}
-                      className="w-full h-[400px] object-contain rounded-lg bg-muted"
+                      className="w-full h-[300px] md:h-[400px] object-contain rounded-lg bg-muted"
                       loading="lazy"
                     />
                   )}
@@ -424,27 +448,27 @@ const AboutSection = () => {
                     <>
                       <button
                         onClick={handlePrevImage}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full transition-colors"
+                        className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background p-1.5 md:p-2 rounded-full transition-colors shadow-lg"
                         aria-label="Предыдущее фото"
                       >
-                        <Icon name="ChevronLeft" size={24} />
+                        <Icon name="ChevronLeft" size={20} className="md:w-6 md:h-6" />
                       </button>
                       <button
                         onClick={handleNextImage}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full transition-colors"
+                        className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background p-1.5 md:p-2 rounded-full transition-colors shadow-lg"
                         aria-label="Следующее фото"
                       >
-                        <Icon name="ChevronRight" size={24} />
+                        <Icon name="ChevronRight" size={20} className="md:w-6 md:h-6" />
                       </button>
                     </>
                   )}
                 </div>
                 
-                <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-thin">
                   {selectedMember.gallery.map((photo, index) => (
                     <div
                       key={index}
-                      className={`relative w-20 h-20 rounded cursor-pointer transition-all ${
+                      className={`relative min-w-[60px] w-[60px] h-[60px] md:min-w-[80px] md:w-20 md:h-20 rounded cursor-pointer transition-all ${
                         index === currentImageIndex 
                           ? 'ring-2 ring-primary scale-105' 
                           : 'opacity-60 hover:opacity-100'
