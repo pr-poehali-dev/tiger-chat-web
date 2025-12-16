@@ -388,7 +388,8 @@ const AboutSection = () => {
                   <img
                     src={selectedMember.gallery[currentImageIndex]}
                     alt={`${selectedMember.name} - фото ${currentImageIndex + 1}`}
-                    className="w-full h-[400px] object-cover rounded-lg"
+                    className="w-full h-[400px] object-contain rounded-lg bg-muted"
+                    loading="lazy"
                   />
                   
                   {selectedMember.gallery.length > 1 && (
@@ -423,6 +424,7 @@ const AboutSection = () => {
                           : 'opacity-60 hover:opacity-100'
                       }`}
                       onClick={() => setCurrentImageIndex(index)}
+                      loading="lazy"
                     />
                   ))}
                 </div>
