@@ -176,6 +176,24 @@ const teamMembers = [
 
 const AboutSection = () => {
   const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleNextImage = () => {
+    if (selectedMember?.gallery) {
+      setCurrentImageIndex((prev) => (prev + 1) % selectedMember.gallery.length);
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (selectedMember?.gallery) {
+      setCurrentImageIndex((prev) => (prev - 1 + selectedMember.gallery.length) % selectedMember.gallery.length);
+    }
+  };
+
+  const handleMemberSelect = (member: typeof teamMembers[0]) => {
+    setSelectedMember(member);
+    setCurrentImageIndex(0);
+  };
 
   return (
     <>
@@ -276,7 +294,7 @@ const AboutSection = () => {
                 key={index} 
                 className="bg-background/10 border-background/20 backdrop-blur animate-fade-in hover-scale cursor-pointer" 
                 style={{ animationDelay: `${index * 0.1}s` }}
-                onClick={() => setSelectedMember(member)}
+                onClick={() => handleMemberSelect(member)}
               >
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-4">
@@ -364,16 +382,47 @@ const AboutSection = () => {
               <div className="pt-6 border-t">
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                   <Icon name="Image" size={20} />
-                  Галерея
+                  Галерея ({currentImageIndex + 1} / {selectedMember.gallery.length})
                 </h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="relative">
+                  <img
+                    src={selectedMember.gallery[currentImageIndex]}
+                    alt={`${selectedMember.name} - фото ${currentImageIndex + 1}`}
+                    className="w-full h-[400px] object-cover rounded-lg"
+                  />
+                  
+                  {selectedMember.gallery.length > 1 && (
+                    <>
+                      <button
+                        onClick={handlePrevImage}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full transition-colors"
+                        aria-label="Предыдущее фото"
+                      >
+                        <Icon name="ChevronLeft" size={24} />
+                      </button>
+                      <button
+                        onClick={handleNextImage}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full transition-colors"
+                        aria-label="Следующее фото"
+                      >
+                        <Icon name="ChevronRight" size={24} />
+                      </button>
+                    </>
+                  )}
+                </div>
+                
+                <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
                   {selectedMember.gallery.map((photo, index) => (
                     <img
                       key={index}
                       src={photo}
-                      alt={`${selectedMember.name} - фото ${index + 1}`}
-                      className="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
-                      onClick={() => window.open(photo, '_blank')}
+                      alt={`${selectedMember.name} - миниатюра ${index + 1}`}
+                      className={`w-20 h-20 object-cover rounded cursor-pointer transition-all ${
+                        index === currentImageIndex 
+                          ? 'ring-2 ring-primary scale-105' 
+                          : 'opacity-60 hover:opacity-100'
+                      }`}
+                      onClick={() => setCurrentImageIndex(index)}
                     />
                   ))}
                 </div>
