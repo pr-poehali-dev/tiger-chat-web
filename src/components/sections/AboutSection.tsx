@@ -395,12 +395,21 @@ const AboutSection = () => {
                   Галерея ({currentImageIndex + 1} / {selectedMember.gallery.length})
                 </h3>
                 <div className="relative">
-                  <img
-                    src={selectedMember.gallery[currentImageIndex]}
-                    alt={`${selectedMember.name} - фото ${currentImageIndex + 1}`}
-                    className="w-full h-[400px] object-contain rounded-lg bg-muted"
-                    loading="lazy"
-                  />
+                  {selectedMember.gallery[currentImageIndex].endsWith('.mp4') ? (
+                    <video
+                      src={selectedMember.gallery[currentImageIndex]}
+                      className="w-full h-[400px] object-contain rounded-lg bg-muted"
+                      controls
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={selectedMember.gallery[currentImageIndex]}
+                      alt={`${selectedMember.name} - фото ${currentImageIndex + 1}`}
+                      className="w-full h-[400px] object-contain rounded-lg bg-muted"
+                      loading="lazy"
+                    />
+                  )}
                   
                   {selectedMember.gallery.length > 1 && (
                     <>
@@ -424,18 +433,33 @@ const AboutSection = () => {
                 
                 <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
                   {selectedMember.gallery.map((photo, index) => (
-                    <img
+                    <div
                       key={index}
-                      src={photo}
-                      alt={`${selectedMember.name} - миниатюра ${index + 1}`}
-                      className={`w-20 h-20 object-cover rounded cursor-pointer transition-all ${
+                      className={`relative w-20 h-20 rounded cursor-pointer transition-all ${
                         index === currentImageIndex 
                           ? 'ring-2 ring-primary scale-105' 
                           : 'opacity-60 hover:opacity-100'
                       }`}
                       onClick={() => setCurrentImageIndex(index)}
-                      loading="lazy"
-                    />
+                    >
+                      {photo.endsWith('.mp4') ? (
+                        <>
+                          <video
+                            src={photo}
+                            className="w-full h-full object-cover rounded"
+                            muted
+                          />
+                          <Icon name="Play" size={16} className="absolute inset-0 m-auto text-white drop-shadow-lg" />
+                        </>
+                      ) : (
+                        <img
+                          src={photo}
+                          alt={`${selectedMember.name} - миниатюра ${index + 1}`}
+                          className="w-full h-full object-cover rounded"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
