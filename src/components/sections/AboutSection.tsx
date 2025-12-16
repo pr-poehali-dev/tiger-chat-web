@@ -148,7 +148,17 @@ const teamMembers = [
     achievement: 'Кемерово',
     image: 'https://cdn.poehali.dev/files/Bul.png',
     description: 'Кемеровская бегунья с большими амбициями.',
-    achievements: ['5 марафонов', 'Рекорд города', 'Командный игрок']
+    achievements: ['5 марафонов', 'Рекорд города', 'Командный игрок'],
+    gallery: [
+      'https://cdn.poehali.dev/files/SHRM2676.JPG',
+      'https://cdn.poehali.dev/files/IMG_20230728_114132_981(1).jpg',
+      'https://cdn.poehali.dev/files/IMG_20230728_114434_715(1).jpg',
+      'https://cdn.poehali.dev/files/IMG_20230804_131815_855(1).jpg',
+      'https://cdn.poehali.dev/files/IMG_20230728_114645_208.jpg',
+      'https://cdn.poehali.dev/files/IMG_20251215_235734_940.jpg',
+      'https://cdn.poehali.dev/files/kCuZWJWH67U(1).jpg',
+      'https://cdn.poehali.dev/files/Picsart_23-01-31_17-01-32-310(1).jpg'
+    ]
   },
   {
     name: 'Константин',
