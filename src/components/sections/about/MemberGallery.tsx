@@ -85,18 +85,18 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
+        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} aspect-[4/3] relative rounded-lg overflow-hidden bg-muted`}>
           {gallery[currentImageIndex].includes('drive.google.com') ? (
             <iframe
               src={`https://drive.google.com/file/d/${gallery[currentImageIndex].match(/\/d\/([^/]+)/)?.[1]}/preview`}
-              className="w-full h-[300px] md:h-[450px] rounded-lg"
+              className="absolute inset-0 w-full h-full"
               allow="autoplay"
             />
           ) : gallery[currentImageIndex].endsWith('.mp4') ? (
             <video
               key={currentImageIndex}
               src={gallery[currentImageIndex]}
-              className="w-full h-[300px] md:h-[450px] object-contain rounded-lg bg-muted"
+              className="absolute inset-0 w-full h-full object-cover"
               controls
               playsInline
               preload="metadata"
@@ -105,7 +105,7 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
             <img
               src={gallery[currentImageIndex]}
               alt={`${memberName} - фото ${currentImageIndex + 1}`}
-              className="w-full h-[300px] md:h-[450px] object-contain rounded-lg bg-muted"
+              className="absolute inset-0 w-full h-full object-cover"
               loading="eager"
             />
           )}
@@ -116,21 +116,21 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
             <button
               onClick={handlePrevImage}
               disabled={isTransitioning}
-              className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background disabled:opacity-50 p-2 md:p-3 rounded-full transition-all shadow-lg opacity-0 group-hover:opacity-100"
+              className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background disabled:opacity-50 p-2 md:p-3 rounded-full transition-all shadow-lg md:opacity-0 md:group-hover:opacity-100"
               aria-label="Предыдущее фото"
             >
-              <Icon name="ChevronLeft" size={24} />
+              <Icon name="ChevronLeft" size={20} className="md:w-6 md:h-6" />
             </button>
             <button
               onClick={handleNextImage}
               disabled={isTransitioning}
-              className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background disabled:opacity-50 p-2 md:p-3 rounded-full transition-all shadow-lg opacity-0 group-hover:opacity-100"
+              className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background disabled:opacity-50 p-2 md:p-3 rounded-full transition-all shadow-lg md:opacity-0 md:group-hover:opacity-100"
               aria-label="Следующее фото"
             >
-              <Icon name="ChevronRight" size={24} />
+              <Icon name="ChevronRight" size={20} className="md:w-6 md:h-6" />
             </button>
             
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+            <div className="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 bg-background/20 backdrop-blur-sm px-3 py-2 rounded-full">
               {gallery.map((_, index) => (
                 <button
                   key={index}
@@ -141,10 +141,10 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
                       setTimeout(() => setIsTransitioning(false), 300);
                     }
                   }}
-                  className={`h-1.5 rounded-full transition-all ${
+                  className={`h-2 rounded-full transition-all ${
                     index === currentImageIndex 
                       ? 'bg-primary w-8' 
-                      : 'bg-background/50 w-1.5 hover:bg-background/70'
+                      : 'bg-background/60 w-2 hover:bg-background/80'
                   }`}
                   aria-label={`Перейти к фото ${index + 1}`}
                 />
@@ -154,14 +154,14 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
         )}
       </div>
       
-      <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-thin snap-x snap-mandatory">
+      <div className="flex gap-2 md:gap-3 mt-4 overflow-x-auto pb-2 scrollbar-thin snap-x snap-mandatory -mx-1 px-1">
         {gallery.map((photo, index) => (
           <button
             key={index}
-            className={`relative min-w-[70px] w-[70px] h-[70px] md:min-w-[90px] md:w-[90px] md:h-[90px] rounded-lg cursor-pointer transition-all snap-start flex-shrink-0 ${
+            className={`relative min-w-[80px] w-[80px] h-[60px] md:min-w-[120px] md:w-[120px] md:h-[90px] rounded-lg cursor-pointer transition-all snap-start flex-shrink-0 overflow-hidden ${
               index === currentImageIndex 
                 ? 'ring-2 ring-primary scale-105 shadow-lg' 
-                : 'opacity-50 hover:opacity-100 hover:scale-105'
+                : 'opacity-60 hover:opacity-100 hover:scale-105'
             }`}
             onClick={() => {
               if (!isTransitioning) {
@@ -172,26 +172,26 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
             }}
           >
             {photo.includes('drive.google.com') ? (
-              <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
-                <Icon name="Video" size={24} className="text-muted-foreground" />
+              <div className="w-full h-full bg-muted flex items-center justify-center">
+                <Icon name="Video" size={20} className="text-muted-foreground" />
               </div>
             ) : photo.endsWith('.mp4') ? (
               <>
                 <video
                   src={photo}
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-cover"
                   muted
                   preload="metadata"
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Icon name="Play" size={20} className="text-white drop-shadow-lg" />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                  <Icon name="Play" size={16} className="text-white drop-shadow-lg" />
                 </div>
               </>
             ) : (
               <img
                 src={photo}
                 alt={`${memberName} - миниатюра ${index + 1}`}
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-cover"
                 loading="lazy"
               />
             )}
