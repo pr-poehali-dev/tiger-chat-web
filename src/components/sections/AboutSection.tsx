@@ -119,6 +119,7 @@ const teamMembers = [
     name: 'Михаил Марков',
     role: 'МыслейНет',
     achievement: 'Челябинск',
+    image: 'https://cdn.poehali.dev/files/mih.png',
     description: 'Во время бега отключает мысли и наслаждается процессом.',
     achievements: ['Медитативный бег', '7 марафонов', 'Дзен-мастер']
   },
