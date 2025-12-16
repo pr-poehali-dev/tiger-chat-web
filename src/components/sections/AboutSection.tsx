@@ -127,7 +127,7 @@ const teamMembers = [
     description: 'Бегает по карельским лесам и тропам, находя силы в природе.',
     achievements: ['Трейлраннер', '6 марафонов', 'Покорительница Карелии'],
     gallery: [
-      'https://drive.google.com/uc?export=download&id=1sKgpt7uvCOySFXc66OsnBI2DsE5O6mJC'
+      'https://drive.google.com/file/d/1sKgpt7uvCOySFXc66OsnBI2DsE5O6mJC/view'
     ]
   },
   {
@@ -398,7 +398,13 @@ const AboutSection = () => {
                   Галерея ({currentImageIndex + 1} / {selectedMember.gallery.length})
                 </h3>
                 <div className="relative">
-                  {selectedMember.gallery[currentImageIndex].endsWith('.mp4') ? (
+                  {selectedMember.gallery[currentImageIndex].includes('drive.google.com') ? (
+                    <iframe
+                      src={`https://drive.google.com/file/d/${selectedMember.gallery[currentImageIndex].match(/\/d\/([^/]+)/)?.[1]}/preview`}
+                      className="w-full h-[400px] rounded-lg"
+                      allow="autoplay"
+                    />
+                  ) : selectedMember.gallery[currentImageIndex].endsWith('.mp4') ? (
                     <video
                       src={selectedMember.gallery[currentImageIndex]}
                       className="w-full h-[400px] object-contain rounded-lg bg-muted"
