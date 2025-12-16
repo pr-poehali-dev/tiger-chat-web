@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
 interface MemberGalleryProps {
@@ -11,6 +11,12 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [scale, setScale] = useState(1);
+  const [lastTap, setLastTap] = useState(0);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const initialDistanceRef = useRef(0);
+  const initialScaleRef = useRef(1);
 
   useEffect(() => {
     const preloadImage = (src: string) => {
@@ -41,19 +47,74 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
     setTimeout(() => setIsTransitioning(false), 300);
   };
 
+  const handleDoubleTap = () => {
+    if (isZoomed) {
+      setIsZoomed(false);
+      setScale(1);
+    } else {
+      setIsZoomed(true);
+      setScale(2);
+    }
+  };
+
+  const getDistance = (touches: React.TouchList) => {
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    return Math.sqrt(
+      Math.pow(touch2.clientX - touch1.clientX, 2) +
+      Math.pow(touch2.clientY - touch1.clientY, 2)
+    );
+  };
+
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
+    if (e.touches.length === 2) {
+      initialDistanceRef.current = getDistance(e.touches);
+      initialScaleRef.current = scale;
+      return;
+    }
+
+    if (e.touches.length === 1) {
+      const now = Date.now();
+      const timeSinceLastTap = now - lastTap;
+      
+      if (timeSinceLastTap < 300 && timeSinceLastTap > 0) {
+        handleDoubleTap();
+        setLastTap(0);
+      } else {
+        setLastTap(now);
+      }
+      
+      setTouchStart(e.touches[0].clientX);
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+    if (e.touches.length === 2 && initialDistanceRef.current > 0) {
+      e.preventDefault();
+      const currentDistance = getDistance(e.touches);
+      const scaleChange = currentDistance / initialDistanceRef.current;
+      const newScale = Math.min(Math.max(initialScaleRef.current * scaleChange, 1), 4);
+      setScale(newScale);
+      setIsZoomed(newScale > 1);
+      return;
+    }
+
+    if (e.touches.length === 1 && !isZoomed) {
+      setTouchEnd(e.touches[0].clientX);
+    }
   };
 
   const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) {
+    if (initialDistanceRef.current > 0) {
+      initialDistanceRef.current = 0;
+      initialScaleRef.current = scale;
+      return;
+    }
+
+    if (!isZoomed && touchStart - touchEnd > 75) {
       handleNextImage();
     }
-    if (touchStart - touchEnd < -75) {
+    if (!isZoomed && touchStart - touchEnd < -75) {
       handlePrevImage();
     }
   };
@@ -68,6 +129,11 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentImageIndex]);
 
+  useEffect(() => {
+    setIsZoomed(false);
+    setScale(1);
+  }, [currentImageIndex]);
+
   return (
     <div className="pt-6 border-t">
       <h3 className="text-lg font-semibold mb-4 flex items-center justify-between">
@@ -80,12 +146,20 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
         </span>
       </h3>
       <div 
+        ref={imageContainerRef}
         className="relative touch-pan-y group"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} aspect-[4/3] relative rounded-lg overflow-hidden bg-muted`}>
+        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} aspect-[4/3] relative rounded-lg overflow-hidden bg-muted ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}>
+          <div 
+            className="absolute inset-0 transition-transform duration-300 ease-out"
+            style={{ 
+              transform: `scale(${scale})`,
+              transformOrigin: 'center center'
+            }}
+          >
           {gallery[currentImageIndex].includes('drive.google.com') ? (
             <iframe
               src={`https://drive.google.com/file/d/${gallery[currentImageIndex].match(/\/d\/([^/]+)/)?.[1]}/preview`}
@@ -107,15 +181,17 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
               alt={`${memberName} - фото ${currentImageIndex + 1}`}
               className="absolute inset-0 w-full h-full object-cover"
               loading="eager"
+              onClick={handleDoubleTap}
             />
           )}
+          </div>
         </div>
         
         {gallery.length > 1 && (
           <>
             <button
               onClick={handlePrevImage}
-              disabled={isTransitioning}
+              disabled={isTransitioning || isZoomed}
               className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background disabled:opacity-50 p-2 md:p-3 rounded-full transition-all shadow-lg md:opacity-0 md:group-hover:opacity-100"
               aria-label="Предыдущее фото"
             >
@@ -123,7 +199,7 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
             </button>
             <button
               onClick={handleNextImage}
-              disabled={isTransitioning}
+              disabled={isTransitioning || isZoomed}
               className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background disabled:opacity-50 p-2 md:p-3 rounded-full transition-all shadow-lg md:opacity-0 md:group-hover:opacity-100"
               aria-label="Следующее фото"
             >
