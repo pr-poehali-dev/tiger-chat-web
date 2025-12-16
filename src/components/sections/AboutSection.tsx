@@ -85,7 +85,8 @@ const teamMembers = [
       'https://cdn.poehali.dev/files/IMG_3833.JPG',
       'https://cdn.poehali.dev/files/IMG_3831.JPG',
       'https://cdn.poehali.dev/files/ED0BC7E8-C2B4-44EE-9C91-3A54143E3A8F.jpg',
-      'https://cdn.poehali.dev/files/IMG_0904.PNG'
+      'https://cdn.poehali.dev/files/IMG_0904.PNG',
+      'https://cdn.poehali.dev/files/IMG_0905_1.png'
     ],
     description: 'Представляет Ярославль на всероссийских соревнованиях с гордостью.',
     achievements: ['Чемпионка области', '7 марафонов', 'Амбассадор Ярославля']
