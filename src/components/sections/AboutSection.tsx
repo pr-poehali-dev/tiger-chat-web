@@ -22,6 +22,11 @@ const teamMembers = [
     role: 'Владелец клуба',
     achievement: 'Бежит всегда, бежит везде. Примерный семьянин, многодетный отец',
     image: 'https://cdn.poehali.dev/files/ura.png',
+    gallery: [
+      'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/ff2c8613-a10b-4eec-887f-a24a202ac39d.jpg',
+      'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/ea3e6d41-f067-415b-8ad3-d51467240ea4.jpg',
+      'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/2bea2de9-f579-4c5b-bf69-531df941bc86.jpg'
+    ],
     description: 'Основатель клуба и вдохновитель команды. Многолетний опыт в беге и организации спортивных мероприятий.',
     achievements: ['10+ марафонов', 'Организатор беговых клубов', 'Наставник начинающих бегунов']
   },
@@ -293,7 +298,7 @@ const AboutSection = () => {
       </section>
 
       <Dialog open={!!selectedMember} onOpenChange={() => setSelectedMember(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="flex items-center gap-4 mb-4">
               {selectedMember?.image ? (
@@ -347,6 +352,26 @@ const AboutSection = () => {
                 {selectedMember?.achievement}
               </p>
             </div>
+
+            {selectedMember?.gallery && selectedMember.gallery.length > 0 && (
+              <div className="pt-6 border-t">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Icon name="Image" size={20} />
+                  Галерея
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {selectedMember.gallery.map((photo, index) => (
+                    <img
+                      key={index}
+                      src={photo}
+                      alt={`${selectedMember.name} - фото ${index + 1}`}
+                      className="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+                      onClick={() => window.open(photo, '_blank')}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
