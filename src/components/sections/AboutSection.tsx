@@ -81,6 +81,11 @@ const teamMembers = [
     role: 'Оксана',
     achievement: 'Бегу за Ярославль',
     image: 'https://cdn.poehali.dev/files/oks.png',
+    gallery: [
+      'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/f715f110-d5ac-4f3b-8f5b-760b6d3983f6.jpg',
+      'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/4be32733-2a68-4d98-b26b-ccf123a6ac4c.jpg',
+      'https://cdn.poehali.dev/projects/753ec68b-a295-46dd-8659-fca0e769ac37/files/de0bfca0-5534-447a-815c-69a22332c47b.jpg'
+    ],
     description: 'Представляет Ярославль на всероссийских соревнованиях с гордостью.',
     achievements: ['Чемпионка области', '7 марафонов', 'Амбассадор Ярославля']
   },
