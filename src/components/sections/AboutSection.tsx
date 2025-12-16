@@ -125,7 +125,10 @@ const teamMembers = [
     achievement: 'Карельский бег',
     image: 'https://cdn.poehali.dev/files/ari.png',
     description: 'Бегает по карельским лесам и тропам, находя силы в природе.',
-    achievements: ['Трейлраннер', '6 марафонов', 'Покорительница Карелии']
+    achievements: ['Трейлраннер', '6 марафонов', 'Покорительница Карелии'],
+    gallery: [
+      'https://drive.google.com/uc?export=download&id=1sKgpt7uvCOySFXc66OsnBI2DsE5O6mJC'
+    ]
   },
   {
     name: 'Михаил Марков',
