@@ -42,6 +42,17 @@ export const teamMembers: TeamMember[] = [
     role: 'Леди Байкал',
     achievement: 'Спортивный концентрат. Бег, лыжи, горы - кайф',
     image: 'https://cdn.poehali.dev/files/shovk.png',
+    gallery: [
+      'https://cdn.poehali.dev/files/IMG_2869.JPG',
+      'https://cdn.poehali.dev/files/IMG_3219.JPG',
+      'https://cdn.poehali.dev/files/IMG_3261.JPG',
+      'https://cdn.poehali.dev/files/IMG_3306.JPG',
+      'https://cdn.poehali.dev/files/IMG_9452.JPG',
+      'https://cdn.poehali.dev/files/IMG_9866.JPG',
+      'https://cdn.poehali.dev/files/IMG_0520.JPG',
+      'https://cdn.poehali.dev/files/IMG_3534.JPG',
+      'https://cdn.poehali.dev/files/IMG_7573.JPG'
+    ],
     description: 'Универсальная спортсменка с опытом в беге, лыжах и горном туризме. Покоряет вершины и дистанции.',
     achievements: ['Участница Байкальского марафона', 'Мастер горного бега', '20+ медалей']
   },
