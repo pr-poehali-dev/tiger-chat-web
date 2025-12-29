@@ -152,7 +152,7 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} aspect-[4/3] relative rounded-lg overflow-hidden bg-muted ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}>
+        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} relative rounded-lg overflow-hidden bg-muted ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} style={{ maxHeight: '60vh', aspectRatio: '4/3' }}>
           <div 
             className="absolute inset-0 transition-transform duration-300 ease-out"
             style={{ 

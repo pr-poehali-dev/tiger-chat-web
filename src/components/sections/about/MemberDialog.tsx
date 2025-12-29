@@ -16,7 +16,7 @@ interface MemberDialogProps {
 export const MemberDialog = ({ member, onClose }: MemberDialogProps) => {
   return (
     <Dialog open={!!member} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-4 mb-4">
             {member?.image ? (
