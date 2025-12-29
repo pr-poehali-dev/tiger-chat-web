@@ -240,27 +240,6 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
             >
               <Icon name="ChevronRight" size={20} className="md:w-6 md:h-6" />
             </button>
-            
-            <div className="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 bg-background/20 backdrop-blur-sm px-3 py-2 rounded-full">
-              {gallery.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    if (!isTransitioning) {
-                      setIsTransitioning(true);
-                      setCurrentImageIndex(index);
-                      setTimeout(() => setIsTransitioning(false), 300);
-                    }
-                  }}
-                  className={`h-2 rounded-full transition-all ${
-                    index === currentImageIndex 
-                      ? 'bg-primary w-8' 
-                      : 'bg-background/60 w-2 hover:bg-background/80'
-                  }`}
-                  aria-label={`Перейти к фото ${index + 1}`}
-                />
-              ))}
-            </div>
           </>
         )}
       </div>
