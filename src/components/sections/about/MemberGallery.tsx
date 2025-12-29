@@ -14,6 +14,7 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [scale, setScale] = useState(1);
   const [lastTap, setLastTap] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const initialDistanceRef = useRef(0);
   const initialScaleRef = useRef(1);
@@ -122,12 +123,38 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'ArrowLeft') handlePrevImage();
     if (e.key === 'ArrowRight') handleNextImage();
+    if (e.key === 'Escape' && isFullscreen) toggleFullscreen();
+  };
+
+  const toggleFullscreen = async () => {
+    if (!imageContainerRef.current) return;
+
+    try {
+      if (!document.fullscreenElement) {
+        await imageContainerRef.current.requestFullscreen();
+        setIsFullscreen(true);
+      } else {
+        await document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+    } catch (err) {
+      console.error('Fullscreen error:', err);
+    }
   };
 
   useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentImageIndex]);
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentImageIndex, isFullscreen]);
 
   useEffect(() => {
     setIsZoomed(false);
@@ -152,7 +179,7 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} relative rounded-lg overflow-hidden bg-muted ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} style={{ maxHeight: '60vh', aspectRatio: '4/3' }}>
+        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} relative rounded-lg overflow-hidden bg-muted ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'} ${isFullscreen ? 'h-screen w-screen' : ''}`} style={isFullscreen ? {} : { maxHeight: '60vh', aspectRatio: '4/3' }}>
           <div 
             className="absolute inset-0 transition-transform duration-300 ease-out"
             style={{ 
@@ -187,6 +214,14 @@ export const MemberGallery = ({ gallery, memberName }: MemberGalleryProps) => {
           </div>
         </div>
         
+        <button
+          onClick={toggleFullscreen}
+          className="absolute top-2 right-2 md:top-3 md:right-3 bg-background/90 hover:bg-background p-2 md:p-3 rounded-full transition-all shadow-lg md:opacity-0 md:group-hover:opacity-100 z-10"
+          aria-label={isFullscreen ? "Выйти из полноэкранного режима" : "Полноэкранный режим"}
+        >
+          <Icon name={isFullscreen ? "Minimize2" : "Maximize2"} size={20} className="md:w-6 md:h-6" />
+        </button>
+
         {gallery.length > 1 && (
           <>
             <button
